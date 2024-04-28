@@ -1,8 +1,37 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+	const app = await NestFactory.create(AppModule);
+
+	app.useGlobalPipes(
+		new ValidationPipe({
+			whitelist: true,
+			transform: true,
+			forbidNonWhitelisted: true,
+			transformOptions: {
+				enableImplicitConversion: true,
+			},
+		}),
+	);
+	app.setGlobalPrefix('api/v1');
+
+	const options = new DocumentBuilder()
+		.setTitle('ZenithERP')
+		.setDescription('ZenithERP application')
+		.setVersion('1.0')
+		.build();
+
+	const document = SwaggerModule.createDocument(app, options);
+
+	SwaggerModule.setup('api', app, document);
+
+	await app.listen(process.env.PORT || 3000);
 }
-bootstrap();
+
+bootstrap().then(() => {
+	console.info(`Zenith app served at http://localhost:${process.env.PORT || 3000}`);
+	console.info(`Api available at http://localhost:${process.env.PORT || 3000}/api`);
+});
