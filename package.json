@@ -28,11 +28,11 @@
     "migrate:deploy": "npx prisma migrate deploy",
     "migrate:status": "npx prisma migrate status",
     "migrate:resolve": "npx prisma migrate resolve",
+    "seed": "prisma db seed",
     "prisma:studio": "npx prisma studio",
     "prisma:generate": "npx prisma generate",
     "prisma:generate:watch": "npx prisma generate --watch",
-    "docker:compose": "docker-compose up -d",
-    "docker:recreate": "docker-compose up --force-recreate --no-start"
+    "docker:compose": "docker-compose up -d"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -47,11 +47,13 @@
     "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.6",
     "husky": "^9.0.11",
+    "jest-mock-extended": "^3.0.6",
     "reflect-metadata": "^0.2.0",
     "rimraf": "^5.0.5",
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
@@ -102,5 +104,8 @@
     "*.ts": [
       "eslint"
     ]
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }

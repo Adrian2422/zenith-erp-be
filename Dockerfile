@@ -1,11 +1,16 @@
 FROM node:20 as builder
 
+# Copy files as a non-root user. The `node` user is built in the Node image.
 WORKDIR /usr/src/app
+
+# Defaults to production, docker-compose overrides this to development on build and run.
+ARG NODE_ENV=production
+ENV NODE_ENV $NODE_ENV
 
 COPY package.json package-lock.json ./
 COPY prisma ./prisma/
 
-RUN npm install
+RUN npm ci && npm cache clean --force
 
 COPY . .
 
@@ -24,5 +29,4 @@ COPY --from=builder /usr/src/app/prisma ./prisma
 
 EXPOSE 3000
 
-USER node
 CMD [ "npm", "run", "start:migrate:prod" ]
