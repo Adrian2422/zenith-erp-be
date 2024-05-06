@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcryptjs';
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Order, PaginationQueryDto } from '../../common/dtos/pagination-query.dto';
+import { PaginationQueryDto } from '../../common/dtos/pagination-query.dto';
 import { PaginatedUserResponseDto, UserResponseDto } from './dto/response-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Status } from '@prisma/client';
@@ -39,7 +39,7 @@ export class UsersService {
 	async findOne(id: number): Promise<UserResponseDto> {
 		const user = await this.prismaService.user.findUnique({
 			where: {
-				id,
+				userId: id,
 			},
 		});
 
@@ -51,11 +51,17 @@ export class UsersService {
 	}
 
 	async findOneByEmail(email: string): Promise<UserResponseDto> {
-		return this.prismaService.user.findUnique({
+		const user = await this.prismaService.user.findUnique({
 			where: {
 				email,
 			},
 		});
+
+		if (!user) {
+			throw new NotFoundException();
+		}
+
+		return new UserResponseDto(user);
 	}
 
 	async create({ email, password, ...rest }: CreateUserDto): Promise<UserResponseDto> {
@@ -86,7 +92,7 @@ export class UsersService {
 	async delete(id: number): Promise<UserResponseDto> {
 		const user = await this.prismaService.user.findUnique({
 			where: {
-				id,
+				userId: id,
 			},
 		});
 
@@ -94,17 +100,19 @@ export class UsersService {
 			throw new NotFoundException();
 		}
 
-		return this.prismaService.user.delete({
-			where: {
-				id,
-			},
-		});
+		return this.prismaService.user
+			.delete({
+				where: {
+					userId: id,
+				},
+			})
+			.then((deletedUser) => new UserResponseDto(deletedUser));
 	}
 
 	async block(id: number): Promise<UserResponseDto> {
 		const user = await this.prismaService.user.findUnique({
 			where: {
-				id,
+				userId: id,
 			},
 		});
 
@@ -116,20 +124,22 @@ export class UsersService {
 			throw new ConflictException('Account is already banned');
 		}
 
-		return this.prismaService.user.update({
-			where: {
-				id,
-			},
-			data: {
-				status: Status.BLOCKED,
-			},
-		});
+		return this.prismaService.user
+			.update({
+				where: {
+					userId: id,
+				},
+				data: {
+					status: Status.BLOCKED,
+				},
+			})
+			.then((blockedUser) => new UserResponseDto(blockedUser));
 	}
 
 	async unblock(id: number): Promise<UserResponseDto> {
 		const user = await this.prismaService.user.findUnique({
 			where: {
-				id,
+				userId: id,
 			},
 		});
 
@@ -141,13 +151,15 @@ export class UsersService {
 			throw new ConflictException('Account is not banned');
 		}
 
-		return this.prismaService.user.update({
-			where: {
-				id,
-			},
-			data: {
-				status: Status.ACTIVE,
-			},
-		});
+		return this.prismaService.user
+			.update({
+				where: {
+					userId: id,
+				},
+				data: {
+					status: Status.ACTIVE,
+				},
+			})
+			.then((unblockedUser) => new UserResponseDto(unblockedUser));
 	}
 }

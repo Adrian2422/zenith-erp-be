@@ -8,7 +8,7 @@ import {
 	MaxLength, IsOptional, IsArray
 } from "class-validator";
 import { ApiProperty } from '@nestjs/swagger';
-import { Permissions, Roles } from '@prisma/client';
+import { Permissions, PersonalInfo, Roles } from '@prisma/client';
 
 export class CreateUserDto {
 	@ApiProperty()
@@ -52,4 +52,12 @@ export class CreateUserDto {
 	@IsOptional()
 	@IsEnum(Permissions, { each: true })
 	permissions: Permissions[];
+
+	@ApiProperty()
+	@IsNotEmpty()
+	addressId: number;
+
+	@ApiProperty()
+	@IsNotEmpty()
+	personalInfoId: number;
 }

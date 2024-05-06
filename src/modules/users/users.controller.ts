@@ -29,12 +29,19 @@ export class UsersController {
 	@Get(':id')
 	@Permissions(PermissionsEnum.USER_READ)
 	@ApiOkResponse({ type: UserResponseDto })
+	async findMe(@Param('id', ParseIntPipe) userId: number) {
+		return this.userService.findOne(userId);
+	}
+
+	@Get(':id')
+	@Permissions(PermissionsEnum.USER_READ)
+	@ApiOkResponse({ type: UserResponseDto })
 	async findOne(@Param('id', ParseIntPipe) userId: number) {
 		return this.userService.findOne(userId);
 	}
 
 	@Get()
-	// @Permissions(PermissionsEnum.USER_READ)
+	@Permissions(PermissionsEnum.USER_READ)
 	@ApiOkResponse({ type: UserResponseDto })
 	async findAll(@Query() paginationQuery: PaginationQueryDto) {
 		return this.userService.findAll(paginationQuery);

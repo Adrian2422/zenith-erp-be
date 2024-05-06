@@ -25,14 +25,28 @@ async function generateAdmin() {
 		where: { email: 'admin@zenith.com' },
 		update: {},
 		create: {
-			firstName: 'Admin',
-			lastName: 'Nimda',
 			email: 'admin@zenith.com',
 			password: await hashPassword('P0klik4$'),
-			phone: '111-222-333',
 			status: Status.ACTIVE,
 			role: Roles.ADMIN,
 			permissions: [Permissions.USER_CREATE, Permissions.USER_READ, Permissions.USER_DELETE, Permissions.USER_EDIT],
+			personalInfo: {
+				create: {
+					firstName: 'Admin',
+					lastName: 'Nimda',
+					phone: faker.phone.number(),
+				},
+			},
+			address: {
+				create: {
+					country: faker.location.country(),
+					city: faker.location.city(),
+					street: faker.location.street(),
+					buildingNo: faker.location.buildingNumber(),
+					localNo: faker.location.buildingNumber(),
+					postalCode: faker.location.zipCode('##-###'),
+				},
+			},
 		},
 	});
 }
@@ -40,26 +54,54 @@ async function generateAdmin() {
 async function generateEmployees() {
 	await prisma.user.create({
 		data: {
-			firstName: 'John',
-			lastName: 'Doe',
 			email: 'user@zenith.com',
 			password: await hashPassword('P0klik4$'),
-			phone: faker.phone.number(),
 			status: Status.ACTIVE,
 			role: Roles.EMPLOYEE,
 			permissions: [Permissions.USER_READ],
+			personalInfo: {
+				create: {
+					firstName: 'John',
+					lastName: 'Doe',
+					phone: faker.phone.number(),
+				},
+			},
+			address: {
+				create: {
+					country: faker.location.country(),
+					city: faker.location.city(),
+					street: faker.location.street(),
+					buildingNo: faker.location.buildingNumber(),
+					localNo: faker.location.buildingNumber(),
+					postalCode: faker.location.zipCode('##-###'),
+				},
+			},
 		},
 	});
 
 	for (let i = 0; i < randomUsersCount; i++) {
 		await prisma.user.create({
 			data: {
-				firstName: faker.person.firstName(),
-				lastName: faker.person.lastName(),
 				email: faker.internet.email(),
 				password: await hashPassword('P0klik4$'),
-				phone: faker.phone.number(),
 				status: Status.INACTIVE,
+				personalInfo: {
+					create: {
+						firstName: faker.person.firstName(),
+						lastName: faker.person.lastName(),
+						phone: faker.phone.number(),
+					},
+				},
+				address: {
+					create: {
+						country: faker.location.country(),
+						city: faker.location.city(),
+						street: faker.location.street(),
+						buildingNo: faker.location.buildingNumber(),
+						localNo: faker.location.buildingNumber(),
+						postalCode: faker.location.zipCode('##-###'),
+					},
+				},
 			},
 		});
 	}

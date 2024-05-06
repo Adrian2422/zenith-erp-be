@@ -34,6 +34,12 @@ export class UserResponseDto {
 	@Exclude()
 	updatedAt: Date;
 
+	@Exclude()
+	addressId: number;
+
+	@Exclude()
+	personalInfoId: number;
+
 	constructor(partial: Partial<UserResponseDto>) {
 		Object.assign(this, partial);
 	}

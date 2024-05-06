@@ -4,7 +4,7 @@ Accept: application/json
 Authorization: Bearer {{accessToken}}
 
 ### Find users paginated
-GET http://localhost:3000/api/v1/users?pageIndex=1&pageSize=10&order=id,desc
+GET http://localhost:3000/api/v1/users?pageIndex=1&pageSize=10&order=userId,desc
 Accept: application/json
 Authorization: Bearer {{accessToken}}
 
