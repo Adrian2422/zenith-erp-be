@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 
+const port = process.env.PORT || 3000;
+
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
@@ -21,6 +23,7 @@ async function bootstrap() {
 	const options = new DocumentBuilder()
 		.setTitle('ZenithERP')
 		.setDescription('ZenithERP application')
+		.setExternalDoc('API JSON', `http://localhost:${port}/api-json`)
 		.setVersion('1.0')
 		.build();
 
@@ -32,6 +35,6 @@ async function bootstrap() {
 }
 
 bootstrap().then(() => {
-	console.info(`Zenith app served at http://localhost:${process.env.PORT || 3000}`);
-	console.info(`Api available at http://localhost:${process.env.PORT || 3000}/api`);
+	console.info(`Zenith app served at http://localhost:${port}`);
+	console.info(`Api available at http://localhost:${port}/api`);
 });

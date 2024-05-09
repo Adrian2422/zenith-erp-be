@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: "${DB_PASS}"
       POSTGRES_DB: "${DB_NAME}"
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -28,9 +28,9 @@ services:
   app:
     container_name: zenith_app
     build:
-      context: .
+      context: ./
       args:
-        - APP_ENV
+        - NODE_ENV=${APP_ENV}
     command: npm run start:dev
     ports:
       - "3000:3000"

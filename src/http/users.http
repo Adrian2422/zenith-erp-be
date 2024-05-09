@@ -1,0 +1,40 @@
+### Find user by id
+GET http://localhost:3000/api/v1/users/{{userId}}
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+### Find users paginated
+GET http://localhost:3000/api/v1/users?pageIndex=1&pageSize=10&order=userId,desc
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+### Create user
+POST http://localhost:3000/api/v1/users
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john4@doe.com",
+  "phone": "111-222-333",
+  "password": "P0klik4$",
+  "role": "EMPLOYEE",
+  "permissions": ["USER_VIEW"]
+}
+
+### Delete user
+DELETE http://localhost:3000/api/v1/users/{{userId}}
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+### Block user
+PATCH http://localhost:3000/api/v1/users/{{userId}}/block
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+### Unblock user
+PATCH http://localhost:3000/api/v1/users/{{userId}}/unblock
+Accept: application/json
+Authorization: Bearer {{accessToken}}
