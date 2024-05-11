@@ -6,7 +6,9 @@ import { ValidationPipe } from '@nestjs/common';
 const port = process.env.PORT || 3000;
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule);
+	const app = await NestFactory.create(AppModule, {
+		logger: ['error', 'warn', 'log'],
+	});
 
 	app.useGlobalPipes(
 		new ValidationPipe({
@@ -35,6 +37,6 @@ async function bootstrap() {
 }
 
 bootstrap().then(() => {
-	console.info(`Zenith app served at http://localhost:${port}`);
+	console.info(`Zenith app served at http://localhost:${port}/api/v1`);
 	console.info(`Api available at http://localhost:${port}/api`);
 });

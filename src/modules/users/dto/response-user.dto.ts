@@ -1,11 +1,11 @@
 import { Exclude, Expose } from 'class-transformer';
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
-import { PaginatedDto } from "../../../common/dtos/paginated.dto";
+import { PaginatedDto } from '../../../common/dtos/paginated.dto';
 import { Permissions, Roles, Status } from '@prisma/client';
 
 export class UserResponseDto {
 	@ApiProperty()
-	id: number;
+	userId: number;
 	@ApiProperty()
 	firstName: string;
 	@ApiProperty()

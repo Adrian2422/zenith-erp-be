@@ -1,15 +1,15 @@
 ### Find user by id
-GET http://localhost:3000/api/v1/users/{{userId}}
+GET {{baseUrl}}/users/{{userId}}
 Accept: application/json
 Authorization: Bearer {{accessToken}}
 
 ### Find users paginated
-GET http://localhost:3000/api/v1/users?pageIndex=1&pageSize=10&order=userId,desc
+GET {{baseUrl}}/users?pageIndex=1&pageSize=10&order=userId,desc
 Accept: application/json
 Authorization: Bearer {{accessToken}}
 
 ### Create user
-POST http://localhost:3000/api/v1/users
+POST {{baseUrl}}/users
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
@@ -25,16 +25,16 @@ Authorization: Bearer {{accessToken}}
 }
 
 ### Delete user
-DELETE http://localhost:3000/api/v1/users/{{userId}}
+DELETE {{baseUrl}}/users/{{userId}}
 Accept: application/json
 Authorization: Bearer {{accessToken}}
 
 ### Block user
-PATCH http://localhost:3000/api/v1/users/{{userId}}/block
+PATCH {{baseUrl}}/users/{{userId}}/block
 Accept: application/json
 Authorization: Bearer {{accessToken}}
 
 ### Unblock user
-PATCH http://localhost:3000/api/v1/users/{{userId}}/unblock
+PATCH {{baseUrl}}/users/{{userId}}/unblock
 Accept: application/json
 Authorization: Bearer {{accessToken}}

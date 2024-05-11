@@ -1,0 +1,45 @@
+### Login as admin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+ "email": "admin@zenith.com",
+ "password": "P0klik4$"
+}
+
+> {% client.global.set("accessToken", response.body.accessToken); %}
+
+
+### Login as user
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+	"email": "user@zenith.com",
+	"password": "P0klik4$"
+}
+
+> {% client.global.set("accessToken", response.body.accessToken); %}
+
+### Register
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+	"email": "admin4@zenith.com",
+	"password": "P0klik4$"
+}
+
+> {% client.global.set("accessToken", response.body.accessToken); %}
+
+### Get profile
+GET {{baseUrl}}/auth/profile
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+### Clear variables
+GET {{baseUrl}}
+
+> {%
+	client.global.clearAll()
+%}

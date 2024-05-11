@@ -29,7 +29,13 @@ async function generateAdmin() {
 			password: await hashPassword('P0klik4$'),
 			status: Status.ACTIVE,
 			role: Roles.ADMIN,
-			permissions: [Permissions.USER_CREATE, Permissions.USER_READ, Permissions.USER_DELETE, Permissions.USER_EDIT],
+			permissions: [
+				Permissions.USER_CREATE,
+				Permissions.USER_READ,
+				Permissions.USER_READ_SELF,
+				Permissions.USER_DELETE,
+				Permissions.USER_EDIT,
+			],
 			personalInfo: {
 				create: {
 					firstName: 'Admin',
@@ -58,7 +64,7 @@ async function generateEmployees() {
 			password: await hashPassword('P0klik4$'),
 			status: Status.ACTIVE,
 			role: Roles.EMPLOYEE,
-			permissions: [Permissions.USER_READ],
+			permissions: [Permissions.USER_READ_SELF],
 			personalInfo: {
 				create: {
 					firstName: 'John',
