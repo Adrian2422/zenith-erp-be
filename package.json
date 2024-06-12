@@ -32,7 +32,8 @@
 		"prisma:studio": "npx prisma studio",
 		"prisma:generate": "npx prisma generate",
 		"prisma:generate:watch": "npx prisma generate --watch",
-		"docker:compose": "docker-compose up -d"
+		"docker:dev": "docker-compose up -d",
+		"docker:db": "docker-compose -f docker-compose.db.yml up -d"
 	},
 	"dependencies": {
 		"@nestjs/common": "^10.0.0",

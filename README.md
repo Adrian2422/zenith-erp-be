@@ -18,8 +18,12 @@ Backend aplikacji Zenith ERP
 
 ### Uruchamianie
 
-1. Dev 2. Instalacja zalezności `npm install` 3. Uruchomienie aplikacji `npm run start:dev`
-2. Docker 5. Stworzenie pliku .env 6. `npm run docker:compose`
+1. Dev
+   1. Instalacja zalezności `npm install`
+   2. Uruchomienie aplikacji `npm run start:dev`
+2. Docker
+   1. Stworzenie pliku .env
+   2. `npm run docker:compose`
 
 ### Stawianie bazy
 
