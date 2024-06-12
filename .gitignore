@@ -4,5 +4,4 @@ node_modules/
 dist/
 tmp/
 temp/
-prisma/migrations
 /.env*
