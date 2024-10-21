@@ -5,6 +5,7 @@ import { User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import { AuthRequest, UserJwtPayload } from './dto/jwt-response.dto';
+import { LoginResponseDto } from './dto/login-response.dto';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +24,7 @@ export class AuthService {
 		return null;
 	}
 
-	async login(credentials: LoginDto) {
+	async login(credentials: LoginDto): Promise<LoginResponseDto> {
 		const user = await this.usersService.findOneByEmail(credentials.email);
 		if (!user) {
 			throw new UnauthorizedException();

@@ -6,6 +6,7 @@ import { Public } from '../../common/decorators/public.decorator';
 import { AuthRequest, UserJwtPayload } from './dto/jwt-response.dto';
 import { Permissions } from '../../common/decorators/permissions.decorator';
 import { Permissions as PermissionsEnum } from '@prisma/client';
+import { LoginResponseDto } from './dto/login-response.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -14,7 +15,7 @@ export class AuthController {
 	constructor(private authService: AuthService) {}
 	@Public()
 	@Post('login')
-	async login(@Body() credentials: LoginDto) {
+	async login(@Body() credentials: LoginDto): Promise<LoginResponseDto> {
 		return this.authService.login(credentials);
 	}
 
