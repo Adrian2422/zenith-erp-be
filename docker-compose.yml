@@ -1,26 +1,29 @@
 services:
   pgdb:
+    image: postgres:17
     container_name: zenith_dev_db
-    image: postgres:14.3
-    env_file:
-      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      MESSENGER_PASSWORD: ${MESSENGER_PASSWORD}
     ports:
       - '5432:5432'
     volumes:
-      - db:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   pgadmin:
     container_name: zenith_dev_dbadmin
     image: dpage/pgadmin4
     restart: always
-    env_file:
-      - .env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - '5050:80'
     depends_on:
       - pgdb
-    volumes:
-      - pgadmin:/var/lib/pgadmin/data
 
   app:
     container_name: zenith_dev_app
@@ -38,7 +41,6 @@ services:
       - pgdb
 
 volumes:
-  app:
+  pgdata:
   node_modules:
-  db:
-  pgadmin:
+  app:
