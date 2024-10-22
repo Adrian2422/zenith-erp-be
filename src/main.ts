@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import * as process from 'node:process';
 
 const port = process.env.APP_PORT || 3000;
 
@@ -34,6 +35,11 @@ async function bootstrap() {
 
 		SwaggerModule.setup('api', app, document);
 	}
+
+	app.enableCors({
+		origin: process.env.APP_ENV !== 'production' ? ['http://localhost:4200'] : [],
+		methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+	});
 
 	await app.listen(process.env.APP_PORT || 3000);
 }

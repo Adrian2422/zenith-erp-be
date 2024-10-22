@@ -1,4 +1,5 @@
 # ZENITH ERP BE
+
 Backend aplikacji Zenith ERP
 
 ### Spis treści
@@ -7,7 +8,6 @@ Backend aplikacji Zenith ERP
 2. [Uruchamianie](#uruchamianie)
 3. [GIT](#git)
 4. [FAQ](#faq)
-
 
 ### Stack
 
@@ -19,11 +19,20 @@ Backend aplikacji Zenith ERP
 ### Uruchamianie
 
 1. Dev
-   2. Instalacja zalezności `npm install`
-   3. Uruchomienie aplikacji `npm run start:dev`
-4. Docker
-   5. Stworzenie pliku .env
-   6. `npm run docker:compose`
+   1. Instalacja zalezności `npm install`
+   2. Uruchomienie aplikacji `npm run start:dev`
+2. Docker
+   1. Stworzenie pliku .env
+   2. `npm run docker:compose`
+
+### Stawianie bazy
+
+1. Tworzymy `.env`
+2. Generujemy clienta prismy
+3. W kontenerze postgres tworzymy bazę z nazwą `DB_NAME` (adres znajdujemy z pomocą `docker inspect <db_name>`)
+4. Uruchamiamy migracje
+5. Seedujemy, jeśli potrzeba
 
 ### GIT
+
 ### FAQ
