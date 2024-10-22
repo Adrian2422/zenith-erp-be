@@ -4,7 +4,7 @@ import * as bcrypt from 'bcryptjs';
 import { User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
-import { AuthRequest, UserJwtPayload } from './dto/jwt-response.dto';
+import { UserJwtPayload } from './dto/jwt-response.dto';
 import { LoginResponseDto } from './dto/login-response.dto';
 
 @Injectable()
@@ -41,9 +41,5 @@ export class AuthService {
 		return {
 			accessToken: this.jwtService.sign(payload),
 		};
-	}
-
-	async getProfile(req: AuthRequest) {
-		return req.user;
 	}
 }
