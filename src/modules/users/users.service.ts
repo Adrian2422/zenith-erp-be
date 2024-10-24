@@ -5,6 +5,7 @@ import { PaginationQueryDto } from '../../common/dtos/pagination-query.dto';
 import { PaginatedUserResponseDto, UserResponseDto } from './dto/response-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Status } from '@prisma/client';
+import { SettingsDto } from './dto/settings.dto';
 
 @Injectable()
 export class UsersService {
@@ -107,6 +108,31 @@ export class UsersService {
 				},
 			})
 			.then((deletedUser) => new UserResponseDto(deletedUser));
+	}
+
+	async saveSettings(id: number, settings: SettingsDto): Promise<void> {
+		const user = await this.prismaService.user.findUnique({
+			where: {
+				userId: id,
+			},
+		});
+
+		if (!user) {
+			throw new NotFoundException();
+		}
+
+		await this.prismaService.user.update({
+			where: {
+				userId: id,
+			},
+			data: {
+				setting: {
+					update: {
+						data: { ...settings },
+					},
+				},
+			},
+		});
 	}
 
 	async block(id: number): Promise<UserResponseDto> {

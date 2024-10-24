@@ -5,8 +5,10 @@ import {
 	Matches,
 	MinLength,
 	IsEnum,
-	MaxLength, IsOptional, IsArray
-} from "class-validator";
+	MaxLength,
+	IsOptional,
+	IsArray,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Permissions, PersonalInfo, Roles } from '@prisma/client';
 
@@ -32,8 +34,7 @@ export class CreateUserDto {
 	@ApiProperty({ required: false })
 	@IsString()
 	@Matches(/^(?:\d{3}\-){2}\d{3}$/, {
-		message:
-			'phone must be a valid number separated by dashes (e.g. 111-222-333)'
+		message: 'phone must be a valid number separated by dashes (e.g. 111-222-333)',
 	})
 	phone: string;
 
@@ -60,4 +61,8 @@ export class CreateUserDto {
 	@ApiProperty()
 	@IsNotEmpty()
 	personalInfoId: number;
+
+	@ApiProperty()
+	@IsNotEmpty()
+	settingId: number;
 }

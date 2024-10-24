@@ -19,6 +19,7 @@ import { Roles } from '../../common/decorators/roles.decorator';
 import { PaginationQueryDto } from '../../common/dtos/pagination-query.dto';
 import { UserResponseDto } from './dto/response-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { SettingsDto } from './dto/settings.dto';
 
 @ApiTags('User')
 @Controller('users')
@@ -60,6 +61,13 @@ export class UsersController {
 	@ApiOkResponse({ type: UserResponseDto })
 	async delete(@Param('id', ParseIntPipe) userId: number) {
 		return this.userService.delete(userId);
+	}
+
+	@Patch('/settings/:id')
+	@Roles(RolesEnum.ADMIN, RolesEnum.SUPERUSER, RolesEnum.EMPLOYEE)
+	@ApiOkResponse({ status: 200 })
+	async saveSettings(@Param('id', ParseIntPipe) userId: number, @Body() settings: SettingsDto) {
+		return this.userService.saveSettings(userId, settings);
 	}
 
 	@Patch(':id/block')

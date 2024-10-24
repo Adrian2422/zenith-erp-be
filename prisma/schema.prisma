@@ -25,9 +25,11 @@ model User {
   createdAt      DateTime      @default(now()) @map("created_at")
   updatedAt      DateTime      @updatedAt @map("updated_at")
   address        Address       @relation(references: [addressId], fields: [addressId], onDelete: Cascade)
-  addressId      Int
+  addressId      Int           @map("address_id")
   personalInfo   PersonalInfo? @relation(references: [personalInfoId], fields: [personalInfoId], onDelete: Cascade)
-  personalInfoId Int
+  personalInfoId Int           @map("personal_info_id")
+  setting        Setting       @relation(references: [settingId], fields: [settingId], onDelete: Cascade)
+  settingId      Int           @map("setting_id")
 
   @@map("users")
   @@schema("staff")
@@ -58,6 +60,16 @@ model Address {
   @@schema("staff")
 }
 
+model Setting {
+  settingId Int      @id @default(autoincrement()) @map("setting_id")
+  theme     Theme    @default(LIGHT)
+  language  Language @default(EN)
+  User      User[]
+
+  @@map("settings")
+  @@schema("staff")
+}
+
 enum Roles {
   SUPERUSER
   ADMIN
@@ -84,6 +96,20 @@ enum Status {
   INACTIVE
   BLOCKED
   DELETED
+
+  @@schema("staff")
+}
+
+enum Theme {
+  LIGHT
+  DARK
+
+  @@schema("staff")
+}
+
+enum Language {
+  EN
+  PL
 
   @@schema("staff")
 }
