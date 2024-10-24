@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcryptjs';
 import { faker } from '@faker-js/faker';
-import { Permissions, PrismaClient, Roles, Status } from '@prisma/client';
+import { Permissions, PrismaClient, Roles, Status, Theme, Language } from '@prisma/client';
 
 const randomUsersCount = 100;
 const prisma = new PrismaClient();
@@ -53,6 +53,12 @@ async function generateAdmin() {
 					postalCode: faker.location.zipCode('##-###'),
 				},
 			},
+			setting: {
+				create: {
+					theme: Theme.DARK,
+					language: Language.EN,
+				},
+			},
 		},
 	});
 }
@@ -82,6 +88,12 @@ async function generateEmployees() {
 					postalCode: faker.location.zipCode('##-###'),
 				},
 			},
+			setting: {
+				create: {
+					theme: Theme.LIGHT,
+					language: Language.EN,
+				},
+			},
 		},
 	});
 
@@ -106,6 +118,12 @@ async function generateEmployees() {
 						buildingNo: faker.location.buildingNumber(),
 						localNo: faker.location.buildingNumber(),
 						postalCode: faker.location.zipCode('##-###'),
+					},
+				},
+				setting: {
+					create: {
+						theme: Theme.LIGHT,
+						language: Language.EN,
 					},
 				},
 			},
